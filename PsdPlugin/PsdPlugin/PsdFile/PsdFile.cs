@@ -16,11 +16,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace PhotoshopFile
@@ -544,10 +542,11 @@ namespace PhotoshopFile
         {
             var layersAndComposite = Layers.Concat(new[] { BaseLayer });
             var channels = layersAndComposite.SelectMany(x => x.Channels);
-            Parallel.ForEach(channels, channel =>
+
+            foreach (var channel in channels)
             {
                 channel.DecodeImageData();
-            });
+            }
 
             foreach (var layer in Layers)
             {

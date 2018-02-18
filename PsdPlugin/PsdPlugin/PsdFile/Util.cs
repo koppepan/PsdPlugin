@@ -305,7 +305,7 @@ namespace PhotoshopFile
         public static void DebugMessage(Stream stream, string message, params object[] args)
         {
             var formattedMessage = String.Format(message, args);
-            System.Diagnostics.Debug.WriteLine("0x{0:x}, {0}, {1}", stream.Position, formattedMessage);
+            System.Diagnostics.Debug.WriteLine(string.Format("0x{0:x}, {0}, {1}", stream.Position, formattedMessage));
         }
     }
 

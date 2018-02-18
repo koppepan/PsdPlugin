@@ -46,7 +46,7 @@ namespace PhotoshopFile
             // Specifying ASCII encoding will help catch any accidental calls to
             // BinaryWriter.Write(String).  Since we do not own the Stream, the
             // constructor is called with leaveOpen = true.
-            writer = new BinaryWriter(stream, Encoding.ASCII, true);
+            writer = new BinaryWriter(stream, Encoding.ASCII);
         }
 
         public void Flush()
