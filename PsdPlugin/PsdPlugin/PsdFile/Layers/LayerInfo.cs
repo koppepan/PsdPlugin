@@ -1,4 +1,4 @@
-﻿/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 //
 // Photoshop PSD FileType Plugin for Paint.NET
 // http://psdplugin.codeplex.com/
@@ -62,6 +62,9 @@ namespace PhotoshopFile
                     break;
                 case "luni":
                     result = new LayerUnicodeName(reader);
+                    break;
+                case "TySh":
+                    result = new TextLayerInfo(reader);
                     break;
                 default:
                     result = new RawLayerInfo(reader, signature, key, length);
