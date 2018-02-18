@@ -145,39 +145,5 @@ namespace PhotoshopFile
             Util.DebugMessage(reader.BaseStream, "Load, End, MaskInfo");
         }
 
-        ///////////////////////////////////////////////////////////////////////////
-
-        public void Save(PsdBinaryWriter writer)
-        {
-            Util.DebugMessage(writer.BaseStream, "Save, Begin, MaskInfo");
-
-            if (LayerMask == null)
-            {
-                writer.Write((UInt32)0);
-                return;
-            }
-
-            using (new PsdBlockLengthWriter(writer))
-            {
-                writer.Write(LayerMask.Rect);
-                writer.Write(LayerMask.BackgroundColor);
-                writer.Write((byte)LayerMask.Flags.Data);
-
-                if (UserMask == null)
-                {
-                    // Pad by 2 bytes to make the block length 20
-                    writer.Write((UInt16)0);
-                }
-                else
-                {
-                    writer.Write((byte)UserMask.Flags.Data);
-                    writer.Write(UserMask.BackgroundColor);
-                    writer.Write(UserMask.Rect);
-                }
-            }
-
-            Util.DebugMessage(writer.BaseStream, "Save, End, MaskInfo");
-        }
-
     }
 }

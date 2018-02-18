@@ -69,9 +69,7 @@
     <Compile Include="PsdFile\Layers\Mask.cs" />
     <Compile Include="PsdFile\LoadContext.cs" />
     <Compile Include="PsdFile\PsdBinaryReader.cs" />
-    <Compile Include="PsdFile\PsdBinaryWriter.cs" />
     <Compile Include="PsdFile\PsdBlendMode.cs" />
-    <Compile Include="PsdFile\PsdBlockLengthWriter.cs" />
     <Compile Include="PsdFile\PsdFile.cs" />
     <Compile Include="PsdFile\RleReader.cs" />
     <Compile Include="PsdFile\RleRowLengths.cs" />

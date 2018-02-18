@@ -157,23 +157,6 @@ namespace PhotoshopFile
             Util.DebugMessage(reader.BaseStream, "Load, End, Channel, {0}", ID);
         }
 
-        internal void Save(PsdBinaryWriter writer)
-        {
-            Util.DebugMessage(writer.BaseStream, "Save, Begin, Channel");
-
-            writer.Write(ID);
-            if (Layer.PsdFile.IsLargeDocument)
-            {
-                writer.Write(Length);
-            }
-            else
-            {
-                writer.Write((Int32)Length);
-            }
-
-            Util.DebugMessage(writer.BaseStream, "Save, End, Channel, {0}", ID);
-        }
-
         //////////////////////////////////////////////////////////////////
 
         internal void LoadPixelData(PsdBinaryReader reader)
@@ -266,26 +249,6 @@ namespace PhotoshopFile
                 var rowLengthSize = Layer.PsdFile.IsLargeDocument ? 4 : 2;
                 Length += rowLengthSize * Rect.height;
             }
-        }
-
-        internal void SavePixelData(PsdBinaryWriter writer)
-        {
-            Util.DebugMessage(writer.BaseStream, "Save, Begin, Channel image");
-
-            writer.Write((short)ImageCompression);
-            if (ImageDataRaw == null)
-            {
-                return;
-            }
-
-            if (ImageCompression == PhotoshopFile.ImageCompression.Rle)
-            {
-                RleRowLengths.Write(writer, Layer.PsdFile.IsLargeDocument);
-            }
-            writer.Write(ImageDataRaw);
-
-            Util.DebugMessage(writer.BaseStream, "Save, End, Channel image, {0}",
-              ID, Layer.Name);
         }
     }
 }

@@ -81,10 +81,5 @@ namespace PhotoshopFile
                   $"Incorrect length for {nameof(InfoLayers)}.");
             }
         }
-
-        protected override void WriteData(PsdBinaryWriter writer)
-        {
-            PsdFile.SaveLayersData(writer);
-        }
     }
 }

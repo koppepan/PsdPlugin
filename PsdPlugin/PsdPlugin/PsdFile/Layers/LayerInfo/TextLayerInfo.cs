@@ -59,9 +59,5 @@ namespace PhotoshopFile
 
             return color;
         }
-
-        protected override void WriteData(PsdBinaryWriter writer)
-        {
-        }
     }
 }
