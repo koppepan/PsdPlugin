@@ -64,6 +64,7 @@
     <Compile Include="PsdFile\Layers\LayerInfo\LayerSectionInfo.cs" />
     <Compile Include="PsdFile\Layers\LayerInfo\LayerUnicodeName.cs" />
     <Compile Include="PsdFile\Layers\LayerInfo\RawLayerInfo.cs" />
+    <Compile Include="PsdFile\Layers\LayerInfo\TextLayerInfo.cs" />
     <Compile Include="PsdFile\Layers\Mask.cs" />
     <Compile Include="PsdFile\LoadContext.cs" />
     <Compile Include="PsdFile\PsdBinaryReader.cs" />

@@ -1,4 +1,4 @@
-﻿/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 //
 // Photoshop PSD FileType Plugin for Paint.NET
 // http://psdplugin.codeplex.com/
@@ -34,8 +34,7 @@ namespace PhotoshopFile
             get { return reader.BaseStream; }
         }
 
-        public PsdBinaryReader(Stream stream, PsdBinaryReader reader)
-          : this(stream, reader.encoding)
+        public PsdBinaryReader(Stream stream, PsdBinaryReader reader) : this(stream, reader.encoding)
         {
         }
 
@@ -122,6 +121,56 @@ namespace PhotoshopFile
                 Util.SwapBytes((byte*)&val, 8);
             }
             return val;
+        }
+
+        public float ReadFloat()
+        {
+            string str = string.Empty;
+            for (int index = reader.PeekChar(); index != 10; index = reader.PeekChar())
+            {
+                if (index != 32)
+                {
+                    str = str + reader.ReadChar();
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (string.IsNullOrEmpty(str))
+            {
+                return 0.0f;
+            }
+
+            return Convert.ToSingle(str);
+        }
+
+        public void Seek(string search)
+        {
+            byte[] bytes = Encoding.ASCII.GetBytes(search);
+            Seek(bytes);
+        }
+
+        private void Seek(byte[] search)
+        {
+            while (BaseStream.Position < BaseStream.Length && ReadByte() != search[0])
+            {
+            }
+
+            if (BaseStream.Position >= BaseStream.Length)
+            {
+                return;
+            }
+
+            for (int index = 1; index < search.Length; ++index)
+            {
+                if (ReadByte() != search[index])
+                {
+                    Seek(search);
+                    break;
+                }
+            }
         }
 
         //////////////////////////////////////////////////////////////////
