@@ -16,9 +16,7 @@
 
 using System;
 using System.IO;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
+using UnityEngine;
 
 namespace PhotoshopFile
 {
@@ -27,15 +25,14 @@ namespace PhotoshopFile
     /// </summary>
     public class Thumbnail : RawImageResource
     {
-        public Bitmap Image { get; private set; }
+        public Texture2D Image { get; private set; }
 
         public Thumbnail(ResourceID id, string name)
           : base(id, name)
         {
         }
 
-        public Thumbnail(PsdBinaryReader psdReader, ResourceID id, string name, int numBytes)
-          : base(psdReader, "8BIM", id, name, numBytes)
+        public Thumbnail(PsdBinaryReader psdReader, ResourceID id, string name, int numBytes) : base(psdReader, "8BIM", id, name, numBytes)
         {
             using (var memoryStream = new MemoryStream(Data))
             using (var reader = new PsdBinaryReader(memoryStream, psdReader))
@@ -53,17 +50,14 @@ namespace PhotoshopFile
                 // Raw RGB bitmap
                 if (format == 0)
                 {
-                    Image = new Bitmap((int)width, (int)height, PixelFormat.Format24bppRgb);
+                    Image = new Texture2D((int)width, (int)height, TextureFormat.RGB24, false);
                 }
                 // JPEG bitmap
                 else if (format == 1)
                 {
                     byte[] imgData = reader.ReadBytes(numBytes - HEADER_LENGTH);
-                    using (MemoryStream stream = new MemoryStream(imgData))
-                    {
-                        var bitmap = new Bitmap(stream);
-                        Image = (Bitmap)bitmap.Clone();
-                    }
+                    Image = new Texture2D((int)width, (int)height, TextureFormat.RGB24, false);
+                    ImageConversion.LoadImage(Image, imgData);
 
                     // Reverse BGR pixels from old thumbnail format
                     if (id == ResourceID.ThumbnailBgr)

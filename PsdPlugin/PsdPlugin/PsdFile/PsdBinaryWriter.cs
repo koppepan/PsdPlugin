@@ -15,9 +15,9 @@
 /////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Drawing;
 using System.IO;
 using System.Text;
+using UnityEngine;
 
 namespace PhotoshopFile
 {
@@ -54,12 +54,12 @@ namespace PhotoshopFile
             writer.Flush();
         }
 
-        public void Write(Rectangle rect)
+        public void Write(RectInt rect)
         {
-            Write(rect.Top);
-            Write(rect.Left);
-            Write(rect.Bottom);
-            Write(rect.Right);
+            Write(rect.yMin);
+            Write(rect.xMin);
+            Write(rect.yMax);
+            Write(rect.xMax);
         }
 
         /// <summary>

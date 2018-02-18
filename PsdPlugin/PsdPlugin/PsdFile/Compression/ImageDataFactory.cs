@@ -12,8 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.IO.Compression;
-using System.Drawing;
+using UnityEngine;
 
 namespace PhotoshopFile.Compression
 {
@@ -32,23 +31,23 @@ namespace PhotoshopFile.Compression
             switch (channel.ImageCompression)
             {
                 case ImageCompression.Raw:
-                    imageData = new RawImage(data, channel.Rect.Size, bitDepth);
+                    imageData = new RawImage(data, channel.Rect.size, bitDepth);
                     break;
 
                 case ImageCompression.Rle:
                     imageData = new RleImage(data, channel.RleRowLengths,
-                      channel.Rect.Size, bitDepth);
+                      channel.Rect.size, bitDepth);
                     break;
 
                 case ImageCompression.Zip:
                     // Photoshop treats 32-bit Zip as 32-bit ZipPrediction
                     imageData = (bitDepth == 32)
-                      ? CreateZipPredict(data, channel.Rect.Size, bitDepth)
-                      : new ZipImage(data, channel.Rect.Size, bitDepth);
+                      ? CreateZipPredict(data, channel.Rect.size, bitDepth)
+                      : new ZipImage(data, channel.Rect.size, bitDepth);
                     break;
 
                 case ImageCompression.ZipPrediction:
-                    imageData = CreateZipPredict(data, channel.Rect.Size, bitDepth);
+                    imageData = CreateZipPredict(data, channel.Rect.size, bitDepth);
                     break;
 
                 default:
@@ -61,8 +60,7 @@ namespace PhotoshopFile.Compression
             return imageData;
         }
 
-        private static ImageData CreateZipPredict(byte[] data, Size size,
-          int bitDepth)
+        private static ImageData CreateZipPredict(byte[] data, Vector2Int size, int bitDepth)
         {
             switch (bitDepth)
             {

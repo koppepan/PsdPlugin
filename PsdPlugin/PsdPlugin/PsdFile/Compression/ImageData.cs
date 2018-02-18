@@ -12,8 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Drawing;
-using System.IO.Compression;
+using UnityEngine;
 
 namespace PhotoshopFile.Compression
 {
@@ -23,11 +22,11 @@ namespace PhotoshopFile.Compression
 
         public int BytesPerRow { get; private set; }
 
-        public Size Size { get; private set; }
+        public Vector2Int Size { get; private set; }
 
         protected abstract bool AltersWrittenData { get; }
 
-        protected ImageData(Size size, int bitDepth)
+        protected ImageData(Vector2Int size, int bitDepth)
         {
             Size = size;
             BitDepth = bitDepth;
@@ -39,7 +38,7 @@ namespace PhotoshopFile.Compression
         /// </summary>
         public virtual byte[] Read()
         {
-            var imageLongLength = (long)BytesPerRow * Size.Height;
+            var imageLongLength = (long)BytesPerRow * (int)Size.y;
             Util.CheckByteArrayLength(imageLongLength);
 
             var buffer = new byte[imageLongLength];
@@ -60,7 +59,7 @@ namespace PhotoshopFile.Compression
         /// <param name="array">An array containing the data to be compressed.</param>
         public void Write(byte[] array)
         {
-            var imageLength = (long)BytesPerRow * Size.Height;
+            var imageLength = (long)BytesPerRow * (int)Size.y;
             if (array.Length != imageLength)
             {
                 throw new ArgumentException(

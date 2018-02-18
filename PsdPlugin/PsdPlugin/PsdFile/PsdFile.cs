@@ -17,12 +17,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace PhotoshopFile
 {
@@ -165,11 +164,11 @@ namespace PhotoshopFile
         /// </summary>
         public int RowCount
         {
-            get { return this.BaseLayer.Rect.Height; }
+            get { return this.BaseLayer.Rect.height; }
             set
             {
                 CheckDimension(value);
-                BaseLayer.Rect = new Rectangle(0, 0, BaseLayer.Rect.Width, value);
+                BaseLayer.Rect = new RectInt(0, 0, BaseLayer.Rect.width, value);
             }
         }
 
@@ -179,11 +178,11 @@ namespace PhotoshopFile
         /// </summary>
         public int ColumnCount
         {
-            get { return this.BaseLayer.Rect.Width; }
+            get { return this.BaseLayer.Rect.width; }
             set
             {
                 CheckDimension(value);
-                BaseLayer.Rect = new Rectangle(0, 0, value, BaseLayer.Rect.Height);
+                BaseLayer.Rect = new RectInt(0, 0, value, BaseLayer.Rect.height);
             }
         }
 
@@ -525,10 +524,8 @@ namespace PhotoshopFile
                 // actually pads to 4 bytes.
                 var endPosition = startPosition + sectionLength;
                 var positionOffset = reader.BaseStream.Position - endPosition;
-                Debug.Assert(positionOffset > -4,
-                  "LoadLayers did not read the full length of the Layers Info section.");
-                Debug.Assert(positionOffset <= 0,
-                  "LoadLayers read past the end of the Layers Info section.");
+                System.Diagnostics.Debug.Assert(positionOffset > -4, "LoadLayers did not read the full length of the Layers Info section.");
+                System.Diagnostics.Debug.Assert(positionOffset <= 0, "LoadLayers read past the end of the Layers Info section.");
 
 
                 if (reader.BaseStream.Position < endPosition)
@@ -809,8 +806,7 @@ namespace PhotoshopFile
 
                 var channel = new Channel(i, this.BaseLayer);
                 channel.ImageCompression = ImageCompression;
-                channel.Length = this.RowCount
-                  * Util.BytesPerRow(BaseLayer.Rect.Size, BitDepth);
+                channel.Length = this.RowCount * Util.BytesPerRow(BaseLayer.Rect.size, BitDepth);
 
                 // The composite image stores all RLE headers up-front, rather than
                 // with each channel.

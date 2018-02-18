@@ -12,7 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Drawing;
+using UnityEngine;
 
 namespace PhotoshopFile.Compression
 {
@@ -25,8 +25,7 @@ namespace PhotoshopFile.Compression
             get { return false; }
         }
 
-        public RawImage(byte[] data, Size size, int bitDepth)
-          : base(size, bitDepth)
+        public RawImage(byte[] data, Vector2Int size, int bitDepth) : base(size, bitDepth)
         {
             this.data = data;
         }

@@ -12,30 +12,17 @@
 /////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
+using UnityEngine;
 
 namespace PhotoshopFile
 {
     public static class Util
     {
-        [DebuggerDisplay("Top = {Top}, Bottom = {Bottom}, Left = {Left}, Right = {Right}")]
-        public struct RectanglePosition
+        public static RectInt IntersectWith(this RectInt thisRect, RectInt rect)
         {
-            public int Top { get; set; }
-            public int Bottom { get; set; }
-            public int Left { get; set; }
-            public int Right { get; set; }
-        }
-
-        public static Rectangle IntersectWith(
-          this Rectangle thisRect, Rectangle rect)
-        {
-            thisRect.Intersect(rect);
+            thisRect.SetMinMax(rect.min, rect.max);
             return thisRect;
         }
 
@@ -191,14 +178,14 @@ namespace PhotoshopFile
         /// <param name="size">The size of the image in pixels.</param>
         /// <param name="bitDepth">The bit depth of the image.</param>
         /// <returns>The number of bytes needed to store a row of the image.</returns>
-        public static int BytesPerRow(Size size, int bitDepth)
+        public static int BytesPerRow(Vector2Int size, int bitDepth)
         {
             switch (bitDepth)
             {
                 case 1:
-                    return (size.Width + 7) / 8;
+                    return (size.x + 7) / 8;
                 default:
-                    return size.Width * BytesFromBitDepth(bitDepth);
+                    return size.x * BytesFromBitDepth(bitDepth);
             }
         }
 
@@ -315,12 +302,10 @@ namespace PhotoshopFile
         /// in the stream in both decimal and hexadecimal formats.
         /// </summary>
         [Conditional("DEBUG")]
-        public static void DebugMessage(Stream stream, string message,
-          params object[] args)
+        public static void DebugMessage(Stream stream, string message, params object[] args)
         {
             var formattedMessage = String.Format(message, args);
-            Debug.WriteLine("0x{0:x}, {0}, {1}",
-              stream.Position, formattedMessage);
+            System.Diagnostics.Debug.WriteLine("0x{0:x}, {0}, {1}", stream.Position, formattedMessage);
         }
     }
 

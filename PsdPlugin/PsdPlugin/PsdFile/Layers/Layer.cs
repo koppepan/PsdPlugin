@@ -18,11 +18,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Threading;
+using UnityEngine;
 
 namespace PhotoshopFile
 {
@@ -35,7 +32,7 @@ namespace PhotoshopFile
         /// <summary>
         /// The rectangle containing the contents of the layer.
         /// </summary>
-        public Rectangle Rect { get; set; }
+        public RectInt Rect { get; set; }
 
         /// <summary>
         /// Image channels.
@@ -122,7 +119,7 @@ namespace PhotoshopFile
         public Layer(PsdFile psdFile)
         {
             PsdFile = psdFile;
-            Rect = Rectangle.Empty;
+            Rect = new RectInt();
             Channels = new ChannelList();
             BlendModeKey = PsdBlendMode.Normal;
             AdditionalInfo = new List<LayerInfo>();
@@ -210,7 +207,7 @@ namespace PhotoshopFile
             {
                 if (!this.Channels.ContainsId(id))
                 {
-                    var size = this.Rect.Height * this.Rect.Width;
+                    var size = this.Rect.height * this.Rect.width;
 
                     var ch = new Channel(id, this);
                     ch.ImageData = new byte[size];

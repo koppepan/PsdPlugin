@@ -15,9 +15,9 @@
 /////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Drawing;
 using System.IO;
 using System.Text;
+using UnityEngine;
 
 namespace PhotoshopFile
 {
@@ -139,13 +139,13 @@ namespace PhotoshopFile
             ReadBytes(padBytes);
         }
 
-        public Rectangle ReadRectangle()
+        public RectInt ReadRectangle()
         {
-            var rect = new Rectangle();
-            rect.Y = ReadInt32();
-            rect.X = ReadInt32();
-            rect.Height = ReadInt32() - rect.Y;
-            rect.Width = ReadInt32() - rect.X;
+            var rect = new RectInt();
+            rect.y = ReadInt32();
+            rect.x = ReadInt32();
+            rect.height = ReadInt32() - rect.y;
+            rect.width = ReadInt32() - rect.x;
             return rect;
         }
 

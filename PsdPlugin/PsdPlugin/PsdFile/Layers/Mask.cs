@@ -17,8 +17,7 @@
 using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
+using UnityEngine;
 
 namespace PhotoshopFile
 {
@@ -32,7 +31,7 @@ namespace PhotoshopFile
         /// <summary>
         /// The rectangle enclosing the mask.
         /// </summary>
-        public Rectangle Rect { get; set; }
+        public RectInt Rect { get; set; }
 
         private byte backgroundColor;
         public byte BackgroundColor
@@ -88,7 +87,7 @@ namespace PhotoshopFile
             this.flags = new BitVector32();
         }
 
-        public Mask(Layer layer, Rectangle rect, byte color, BitVector32 flags)
+        public Mask(Layer layer, RectInt rect, byte color, BitVector32 flags)
         {
             Layer = layer;
             Rect = rect;

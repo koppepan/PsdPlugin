@@ -13,9 +13,8 @@
 
 using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
+using UnityEngine;
 
 namespace PhotoshopFile.Compression
 {
@@ -29,9 +28,7 @@ namespace PhotoshopFile.Compression
       get { return false; }
     }
 
-    public RleImage(byte[] rleData, RleRowLengths rleRowLengths,
-      Size size, int bitDepth)
-      : base(size, bitDepth)
+    public RleImage(byte[] rleData, RleRowLengths rleRowLengths, Vector2Int size, int bitDepth) : base(size, bitDepth)
     {
       this.rleData = rleData;
       this.rleRowLengths = rleRowLengths;
@@ -42,7 +39,7 @@ namespace PhotoshopFile.Compression
       var rleStream = new MemoryStream(rleData);
       var rleReader = new RleReader(rleStream);
       var bufferIndex = 0;
-      for (int i = 0; i < Size.Height; i++)
+      for (int i = 0; i < Size.y; i++)
       {
         var bytesRead = rleReader.Read(buffer, bufferIndex, BytesPerRow);
         if (bytesRead != BytesPerRow)
@@ -69,7 +66,7 @@ namespace PhotoshopFile.Compression
       using (var dataStream = new MemoryStream())
       {
         var rleWriter = new RleWriter(dataStream);
-        for (int row = 0; row < Size.Height; row++)
+        for (int row = 0; row < Size.y; row++)
         {
           int rowIndex = row * BytesPerRow;
           rleRowLengths[row] = rleWriter.Write(
@@ -79,8 +76,7 @@ namespace PhotoshopFile.Compression
         // Save compressed data
         dataStream.Flush();
         rleData = dataStream.ToArray();
-        Debug.Assert(rleRowLengths.Total == rleData.Length,
-          "RLE row lengths do not sum to the compressed data length.");
+        System.Diagnostics.Debug.Assert(rleRowLengths.Total == rleData.Length, "RLE row lengths do not sum to the compressed data length.");
       }
     }
   }
