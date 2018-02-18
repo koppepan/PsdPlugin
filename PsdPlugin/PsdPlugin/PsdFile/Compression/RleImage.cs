@@ -28,7 +28,7 @@ namespace PhotoshopFile.Compression
       get { return false; }
     }
 
-    public RleImage(byte[] rleData, RleRowLengths rleRowLengths, Vector2Int size, int bitDepth) : base(size, bitDepth)
+    public RleImage(byte[] rleData, RleRowLengths rleRowLengths, Vector2 size, int bitDepth) : base(size, bitDepth)
     {
       this.rleData = rleData;
       this.rleRowLengths = rleRowLengths;
@@ -39,7 +39,7 @@ namespace PhotoshopFile.Compression
       var rleStream = new MemoryStream(rleData);
       var rleReader = new RleReader(rleStream);
       var bufferIndex = 0;
-      for (int i = 0; i < Size.y; i++)
+      for (int i = 0; i < (int)Size.y; i++)
       {
         var bytesRead = rleReader.Read(buffer, bufferIndex, BytesPerRow);
         if (bytesRead != BytesPerRow)

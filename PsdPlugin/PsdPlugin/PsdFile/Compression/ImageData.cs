@@ -22,11 +22,11 @@ namespace PhotoshopFile.Compression
 
         public int BytesPerRow { get; private set; }
 
-        public Vector2Int Size { get; private set; }
+        public Vector2 Size { get; private set; }
 
         protected abstract bool AltersWrittenData { get; }
 
-        protected ImageData(Vector2Int size, int bitDepth)
+        protected ImageData(Vector2 size, int bitDepth)
         {
             Size = size;
             BitDepth = bitDepth;

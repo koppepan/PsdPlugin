@@ -32,7 +32,7 @@ namespace PhotoshopFile
         /// <summary>
         /// The rectangle containing the contents of the layer.
         /// </summary>
-        public RectInt Rect { get; set; }
+        public Rect Rect { get; set; }
 
         /// <summary>
         /// Image channels.
@@ -119,7 +119,7 @@ namespace PhotoshopFile
         public Layer(PsdFile psdFile)
         {
             PsdFile = psdFile;
-            Rect = new RectInt();
+            Rect = new Rect();
             Channels = new ChannelList();
             BlendModeKey = PsdBlendMode.Normal;
             AdditionalInfo = new List<LayerInfo>();
@@ -207,7 +207,7 @@ namespace PhotoshopFile
             {
                 if (!this.Channels.ContainsId(id))
                 {
-                    var size = this.Rect.height * this.Rect.width;
+                    var size = (int)this.Rect.height * (int)this.Rect.width;
 
                     var ch = new Channel(id, this);
                     ch.ImageData = new byte[size];

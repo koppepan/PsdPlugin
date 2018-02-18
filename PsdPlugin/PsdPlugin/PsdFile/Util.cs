@@ -20,9 +20,9 @@ namespace PhotoshopFile
 {
     public static class Util
     {
-        public static RectInt IntersectWith(this RectInt thisRect, RectInt rect)
+        public static Rect IntersectWith(this Rect thisRect, Rect rect)
         {
-            thisRect.SetMinMax(rect.min, rect.max);
+            thisRect.Set(rect.x, rect.y, rect.width, rect.height);
             return thisRect;
         }
 
@@ -178,14 +178,14 @@ namespace PhotoshopFile
         /// <param name="size">The size of the image in pixels.</param>
         /// <param name="bitDepth">The bit depth of the image.</param>
         /// <returns>The number of bytes needed to store a row of the image.</returns>
-        public static int BytesPerRow(Vector2Int size, int bitDepth)
+        public static int BytesPerRow(Vector2 size, int bitDepth)
         {
             switch (bitDepth)
             {
                 case 1:
-                    return (size.x + 7) / 8;
+                    return ((int)size.x + 7) / 8;
                 default:
-                    return size.x * BytesFromBitDepth(bitDepth);
+                    return (int)size.x * BytesFromBitDepth(bitDepth);
             }
         }
 

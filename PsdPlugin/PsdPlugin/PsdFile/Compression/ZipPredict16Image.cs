@@ -25,7 +25,7 @@ namespace PhotoshopFile.Compression
             get { return true; }
         }
 
-        public ZipPredict16Image(byte[] zipData, Vector2Int size) : base(size, 16)
+        public ZipPredict16Image(byte[] zipData, Vector2 size) : base(size, 16)
         {
             // 16-bitdepth images are delta-encoded word-by-word.  The deltas
             // are thus big-endian and must be reversed for further processing.

@@ -31,7 +31,7 @@ namespace PhotoshopFile
         /// <summary>
         /// The rectangle enclosing the mask.
         /// </summary>
-        public RectInt Rect { get; set; }
+        public Rect Rect { get; set; }
 
         private byte backgroundColor;
         public byte BackgroundColor
@@ -87,7 +87,7 @@ namespace PhotoshopFile
             this.flags = new BitVector32();
         }
 
-        public Mask(Layer layer, RectInt rect, byte color, BitVector32 flags)
+        public Mask(Layer layer, Rect rect, byte color, BitVector32 flags)
         {
             Layer = layer;
             Rect = rect;

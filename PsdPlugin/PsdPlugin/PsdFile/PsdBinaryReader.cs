@@ -188,9 +188,9 @@ namespace PhotoshopFile
             ReadBytes(padBytes);
         }
 
-        public RectInt ReadRectangle()
+        public Rect ReadRectangle()
         {
-            var rect = new RectInt();
+            var rect = new Rect();
             rect.y = ReadInt32();
             rect.x = ReadInt32();
             rect.height = ReadInt32() - rect.y;

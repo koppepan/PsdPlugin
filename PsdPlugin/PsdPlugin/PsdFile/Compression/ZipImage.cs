@@ -28,7 +28,7 @@ namespace PhotoshopFile.Compression
             get { return false; }
         }
 
-        public ZipImage(byte[] data, Vector2Int size, int bitDepth) : base(size, bitDepth)
+        public ZipImage(byte[] data, Vector2 size, int bitDepth) : base(size, bitDepth)
         {
             if (data == null)
             {

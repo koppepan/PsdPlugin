@@ -28,7 +28,7 @@ namespace PhotoshopFile.Compression
             get { return false; }
         }
 
-        public ZipPredict32Image(byte[] zipData, Vector2Int size) : base(size, 32)
+        public ZipPredict32Image(byte[] zipData, Vector2 size) : base(size, 32)
         {
             zipImage = new ZipImage(zipData, size, 32);
         }
@@ -80,16 +80,16 @@ namespace PhotoshopFile.Compression
 
         unsafe private void Predict(Int32* ptrData, byte* ptrOutput)
         {
-            for (int i = 0; i < Size.y; i++)
+            for (int i = 0; i < (int)Size.y; i++)
             {
                 // Pack together the individual bytes of the 32-bit words, high-order
                 // bytes before low-order bytes.
-                int offset1 = Size.x;
+                int offset1 = (int)Size.x;
                 int offset2 = 2 * offset1;
                 int offset3 = 3 * offset1;
 
                 Int32* ptrDataRow = ptrData;
-                Int32* ptrDataRowEnd = ptrDataRow + Size.x;
+                Int32* ptrDataRowEnd = ptrDataRow + (int)Size.x;
                 byte* ptrOutputRow = ptrOutput;
                 byte* ptrOutputRowEnd = ptrOutputRow + BytesPerRow;
                 while (ptrData < ptrDataRowEnd)
@@ -139,12 +139,12 @@ namespace PhotoshopFile.Compression
                 // Within each row, the individual bytes of the 32-bit words are
                 // packed together, high-order bytes before low-order bytes.
                 // We now unpack them into words.
-                int offset1 = Size.x;
+                int offset1 = (int)Size.x;
                 int offset2 = 2 * offset1;
                 int offset3 = 3 * offset1;
 
                 ptrData = ptrDataRow;
-                Int32* ptrOutputRowEnd = ptrOutput + Size.x;
+                Int32* ptrOutputRowEnd = ptrOutput + (int)Size.x;
                 while (ptrOutput < ptrOutputRowEnd)
                 {
                     *ptrOutput = *(ptrData) << 24
